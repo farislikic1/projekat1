@@ -9,10 +9,11 @@ class AuthentificationState extends State<Authentification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[100],
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.green[300],
       appBar: AppBar(
         leading: SizedBox(width: 5.0),
-        backgroundColor: Colors.green[300],
+        backgroundColor: Colors.green[900],
         elevation: 0.0,
         title: Text( 'Demo Tech Team 3',
           style: TextStyle(fontSize: 16.0)
@@ -23,7 +24,8 @@ class AuthentificationState extends State<Authentification> {
           ),
         ],
       ),
-      body: Container(
+      body:SingleChildScrollView(
+        child:Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         
             child: Form(
@@ -43,6 +45,12 @@ class AuthentificationState extends State<Authentification> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     labelText: 'Enter email',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                        width: 2.0 
+                        )
+                    )
                   ),
                 ),
                 SizedBox(height: 10.0),
@@ -50,12 +58,18 @@ class AuthentificationState extends State<Authentification> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.vpn_key),
                     labelText: 'Enter password',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                        width: 2.0
+                      )
+                    )
                   ),
                   obscureText: true,
                 ),
                 SizedBox(height: 30.0),
                 RaisedButton(
-                  color: Colors.green[100],
+                  color: Colors.brown[100],
                   child: Text(
                     'Submit',
                     style: TextStyle(color: Colors.white),
@@ -65,11 +79,8 @@ class AuthentificationState extends State<Authentification> {
                 SizedBox(height: 10.0)
                 ],
         ),
-            
-          
         ),
-        
-
+      )
       ),
     );
   }
