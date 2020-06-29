@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: '\n Hey ' +
                     user +
-                    ', welcome to second screen. \n \n \n \n \n  Your password is ' +
+                    ', welcome to second screen. \n \n \n \n \n Your password is ' +
                     pass,
                 filled: true,
                 fillColor: hexToColor('#bdef9a'),
