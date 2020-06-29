@@ -8,7 +8,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: hexToColor('#5ba42f'),
+      backgroundColor: hexToColor('#4ee44e'),
       appBar: AppBar(
         leading: new IconButton(
           icon: Icon(Icons.close),
@@ -39,9 +39,9 @@ class Home extends StatelessWidget {
               maxLines: 15,
               autocorrect: false,
               decoration: InputDecoration(
-                hintText: 'Hey ' +
+                hintText: ' \n Hey ' +
                     user +
-                    ', welcome to second screen. Your password is ' +
+                    ', welcome to second screen.\n \n \n \n \n Your password is ' +
                     pass,
                 filled: true,
                 fillColor: hexToColor('#bdef9a'),

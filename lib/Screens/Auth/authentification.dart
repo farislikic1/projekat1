@@ -7,13 +7,16 @@ class Authentification extends StatefulWidget {
 }
 
 class AuthentificationState extends State<Authentification> {
+
   TextEditingController userControler = TextEditingController();
   TextEditingController passwordControler = TextEditingController();
+  bool _validateEmail = true;
+  bool _validatePass = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      backgroundColor: hexToColor('#5ba42f'),
+      backgroundColor: hexToColor('#4ee44e'),
       appBar: AppBar(
         leading: SizedBox(width: 5.0),
         backgroundColor: hexToColor('#3d422b'),
@@ -46,6 +49,7 @@ class AuthentificationState extends State<Authentification> {
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.email),
                     labelText: 'Enter email',
+                    errorText: _validateEmail ? null : 'Email field can\'t be empty',
                     border: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.grey, width: 2.0))),
@@ -56,6 +60,7 @@ class AuthentificationState extends State<Authentification> {
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.vpn_key),
                     labelText: 'Enter password',
+                    errorText: _validatePass ? null : 'Password field can\'t have less than 8 characters',
                     border: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.grey, width: 2.0))),
@@ -71,10 +76,14 @@ class AuthentificationState extends State<Authentification> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    if (validateUser(userControler.text) &&
-                        validatePass(passwordControler.text)) {
+                    setState(() {
+                    if (!(validateUser(userControler.text) && validatePass(passwordControler.text))) {
+                      validateUser(userControler.text) ? _validateEmail = true : _validateEmail = false;
+                      validatePass(passwordControler.text) ? _validatePass = true : _validatePass = false;
+                    } else {
                       secondscreenfunkcija(context);
                     }
+                    });
                   },
                 ),
               ),
