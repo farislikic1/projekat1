@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 <<<<<<< HEAD
+<<<<<<< HEAD
       title: 'Flutter Demo',
       
 =======
@@ -17,6 +18,11 @@ class MyApp extends StatelessWidget {
 >>>>>>> master
       theme: ThemeData( ),
       home:  Authentification(),
+=======
+      title: 'Flutter Demo',
+      theme: ThemeData(),
+      home: Authentification(),
+>>>>>>> master
     );
   }
 }
