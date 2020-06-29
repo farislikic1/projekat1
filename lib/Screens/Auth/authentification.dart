@@ -14,7 +14,7 @@ class AuthentificationState extends State<Authentification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      // resizeToAvoidBottomPadding: false,
       backgroundColor: hexToColor('#4ee44e'),
       appBar: AppBar(
         leading: SizedBox(width: 5.0),
@@ -27,77 +27,79 @@ class AuthentificationState extends State<Authentification> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-          child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Form(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 100.0),
-              Text(
-                'REGISTER',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                ),
-              ),
-              SizedBox(height: 60.0),
-              TextField(
-                controller: userControler,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    labelText: 'Enter email',
-                    errorText:
-                        _validateEmail ? null : 'Email field can\'t be empty',
-                    border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey, width: 2.0))),
-              ),
-              SizedBox(height: 40.0),
-              TextField(
-                controller: passwordControler,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
-                    labelText: 'Enter password',
-                    errorText:
-                        _validatePass ? null : 'Password field can\'t be empty',
-                    border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.grey, width: 2.0))),
-                obscureText: true,
-              ),
-              SizedBox(height: 30.0),
-              SizedBox(
-                width: 160.0,
-                child: RaisedButton(
-                  color: hexToColor('#3d422b'),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white),
+      body: ListView(shrinkWrap: true, children: <Widget>[
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 100.0),
+                Text(
+                  'REGISTER',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      if (!(validateUser(userControler.text) &&
-                          validatePass(passwordControler.text))) {
-                        validateUser(userControler.text)
-                            ? _validateEmail = true
-                            : _validateEmail = false;
-                        validatePass(passwordControler.text)
-                            ? _validatePass = true
-                            : _validatePass = false;
-                      } else {
-                        secondscreenfunkcija(context);
-                      }
-                    });
-                  },
                 ),
-              ),
-              SizedBox(height: 10.0)
-            ],
+                SizedBox(height: 60.0),
+                TextField(
+                  controller: userControler,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email),
+                      labelText: 'Enter email',
+                      errorText:
+                          _validateEmail ? null : 'Email field can\'t be empty',
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.grey, width: 2.0))),
+                ),
+                SizedBox(height: 40.0),
+                TextField(
+                  controller: passwordControler,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.vpn_key),
+                      labelText: 'Enter password',
+                      errorText: _validatePass
+                          ? null
+                          : 'Password field can\'t be empty',
+                      border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.grey, width: 2.0))),
+                  obscureText: true,
+                ),
+                SizedBox(height: 30.0),
+                SizedBox(
+                  width: 160.0,
+                  child: RaisedButton(
+                    color: hexToColor('#3d422b'),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (!(validateUser(userControler.text) &&
+                            validatePass(passwordControler.text))) {
+                          validateUser(userControler.text)
+                              ? _validateEmail = true
+                              : _validateEmail = false;
+                          validatePass(passwordControler.text)
+                              ? _validatePass = true
+                              : _validatePass = false;
+                        } else {
+                          secondscreenfunkcija(context);
+                        }
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(height: 10.0)
+              ],
+            ),
           ),
-        ),
-      )),
+        )
+      ]),
     );
   }
 
