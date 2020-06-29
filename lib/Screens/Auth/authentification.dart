@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prviprojekat/Screens/Auth/sign_in.dart';
 import 'package:prviprojekat/Screens/Home/home.dart';
+import 'package:google_sign_in/google_sign_in.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Authentification extends StatefulWidget {
   @override
@@ -11,8 +14,51 @@ class AuthentificationState extends State<Authentification> {
   TextEditingController passwordControler = TextEditingController();
   bool _validateEmail = true;
   bool _validatePass = true;
+
   @override
   Widget build(BuildContext context) {
+
+    Widget _signInButton(){
+  return OutlineButton(
+    splashColor: Colors.grey,
+    onPressed: (){
+      signInWithGoogle().whenComplete(() {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_){
+            return Home();
+          },)
+        );
+      });
+    },
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+    highlightElevation: 0,
+    borderSide: BorderSide(color: Colors.grey),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10) ,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image(image: AssetImage("assets/google_logo.png"), height: 35.0,),
+          Padding(
+            padding: const EdgeInsets.only(left:10),
+            child:Text(
+              'Sign in with Google',
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.grey,
+              )
+            ),
+
+            ),
+          ],
+        ),  
+      ) ,
+      
+    );
+}
+
+
     return Scaffold(
       // resizeToAvoidBottomPadding: false,
       backgroundColor: hexToColor('#4ee44e'),
@@ -33,7 +79,7 @@ class AuthentificationState extends State<Authentification> {
           child: Form(
             child: Column(
               children: <Widget>[
-                SizedBox(height: 100.0),
+                SizedBox(height: 50.0),
                 Text(
                   'REGISTER',
                   textAlign: TextAlign.center,
@@ -94,7 +140,8 @@ class AuthentificationState extends State<Authentification> {
                     },
                   ),
                 ),
-                SizedBox(height: 10.0)
+                SizedBox(height: 20.0),
+                _signInButton(),
               ],
             ),
           ),
@@ -104,6 +151,8 @@ class AuthentificationState extends State<Authentification> {
   }
 
   void secondscreenfunkcija(BuildContext context) {
+    
+
     String username = userControler.text;
     String password = passwordControler.text;
     Navigator.push(
@@ -131,3 +180,6 @@ bool validatePass(String pass) {
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
+
+
+

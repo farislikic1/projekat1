@@ -9,20 +9,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       title: 'Flutter Demo',
-      
-=======
-      title: 'Flutter Demooo',
->>>>>>> master
+      debugShowCheckedModeBanner: false,
       theme: ThemeData( ),
       home:  Authentification(),
-=======
-      title: 'Flutter Demo',
-      theme: ThemeData(),
-      home: Authentification(),
->>>>>>> master
+
     );
   }
 }
