@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'Screens/Auth/authentification.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       title: 'Flutter Demo',
-      theme: ThemeData(),
-      home: Authentification(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData( ),
+      home:  Authentification(),
+
     );
   }
 }
 
+
+/*komentar*/
 /*
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-  //Amer je dodao novi komentar
+  //Faris je dodao novi komentar
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
