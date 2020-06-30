@@ -20,6 +20,7 @@
           "certificate_hash": "ebd7cce1b708c82bb9e98ce1451a6ef10ba419ae"
         }
       },
+
       {
         "client_id": "904316560655-3gdvrdqb5abb8nhe3801001t04or2s9j.apps.googleusercontent.com",
         "client_type": 3
@@ -31,6 +32,7 @@
     "services": {
       "appinvite_service": {
         "other_platform_oauth_client": [{
+
           "client_id": "904316560655-3gdvrdqb5abb8nhe3801001t04or2s9j.apps.googleusercontent.com",
           "client_type": 3
         }]
