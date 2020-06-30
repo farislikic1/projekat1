@@ -94,4 +94,3 @@ class GoogleScreen extends StatelessWidget {
     );
   }
 }
-
