@@ -1,9 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:prviprojekat/Screens/Auth/sign_in.dart';
 import 'package:prviprojekat/Screens/Home/googleScreen.dart';
 import 'package:prviprojekat/Screens/Home/home.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:international_phone_input/international_phone_input.dart';
 
 class Authentification extends StatefulWidget {
   @override
@@ -13,8 +15,12 @@ class Authentification extends StatefulWidget {
 class AuthentificationState extends State<Authentification> {
   TextEditingController userControler = TextEditingController();
   TextEditingController passwordControler = TextEditingController();
+  TextEditingController phoneControler = TextEditingController();
   bool _validateEmail = true;
   bool _validatePass = true;
+  bool _validatePhone=true;
+  bool _homeScreen = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class AuthentificationState extends State<Authentification> {
                 child: Form(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 50.0),
+                      SizedBox(height: 30.0),
                       Text(
                         'REGISTER',
                         textAlign: TextAlign.center,
@@ -50,7 +56,7 @@ class AuthentificationState extends State<Authentification> {
                           fontSize: 20.0,
                         ),
                       ),
-                      SizedBox(height: 60.0),
+                      SizedBox(height: 40.0),
                       // TextField(
                       //   controller: userControler,
                       //   decoration: InputDecoration(
@@ -64,15 +70,17 @@ class AuthentificationState extends State<Authentification> {
                       //               BorderSide(color: Colors.grey, width: 2.0))),
                       // ),
                       Theme(
-                        child: TextField(
+                        child: TextFormField(
                           controller: userControler,
+                          //autovalidate: false,
+                          validator: (input) => input.isValidEmail() ? null : "Check your email",
                           autofocus: true,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.email),
                               labelText: 'Enter email',
                               errorText: _validateEmail
                                   ? null
-                                  : 'Email field can\'t be empty',
+                                  : 'Check your email',
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.grey, width: 2.0))),
@@ -81,7 +89,7 @@ class AuthentificationState extends State<Authentification> {
                           primaryColor: Colors.grey[600],
                         ),
                       ),
-                      SizedBox(height: 40.0),
+                      SizedBox(height: 30.0),
                       // TextField(
                       //   controller: passwordControler,
                       //   decoration: InputDecoration(
@@ -97,7 +105,7 @@ class AuthentificationState extends State<Authentification> {
                       // ),
                       Theme(
                         child: TextField(
-                          autofocus: true,
+                          //autofocus: true,
                           controller: passwordControler,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.vpn_key),
@@ -106,7 +114,7 @@ class AuthentificationState extends State<Authentification> {
                                   ? null
                                   : (passwordControler.text.length == 0)
                                       ? 'Password field can\'t be empty'
-                                      : 'Password field can\'t have less than 8 characters',
+                                      : 'Password too short',
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Colors.grey, width: 2.0))),
@@ -117,7 +125,28 @@ class AuthentificationState extends State<Authentification> {
                         ),
                       ),
                       SizedBox(height: 30.0),
+                      Theme(
+                        child: TextFormField(
+                          controller: phoneControler,
+                          keyboardType: TextInputType.number,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.phone_android),
+                              labelText: 'Enter phone number',
+                              errorText: _validatePhone
+                                  ? null
+                                  : 'Check your number',
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 2.0))),
+                        ),
+                        data: Theme.of(context).copyWith(
+                          primaryColor: Colors.grey[600],
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
                       SizedBox(
+                        
                         width: 160.0,
                         child: RaisedButton(
                           color: hexToColor('#3d422b'),
@@ -127,18 +156,22 @@ class AuthentificationState extends State<Authentification> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if (!(validateUser(userControler.text) &&
-                                  validatePass(passwordControler.text))) {
-                                validateUser(userControler.text)
-                                    ? _validateEmail = true
-                                    : _validateEmail = false;
+                              if (!(validatePhone(phoneControler.text) &&
+                                  validatePass(passwordControler.text) && userControler.text.isValidEmail())) {
+                                validatePhone(phoneControler.text)
+                                    ? _validatePhone = true
+                                    : _validatePhone = false;
                                 validatePass(passwordControler.text)
                                     ? _validatePass = true
                                     : _validatePass = false;
+                                userControler.text.isValidEmail()
+                                    ? _validateEmail = true
+                                    : _validateEmail = false;
                               } else {
                                 _validateEmail = true;
                                 _validatePass = true;
-                                secondscreenfunkcija(context);
+                                _validatePhone=true;
+                                if(userControler.text.isValidEmail()){secondscreenfunkcija(context);}
                               }
                             });
                           },
@@ -148,6 +181,7 @@ class AuthentificationState extends State<Authentification> {
                       OutlineButton(
                         splashColor: Colors.grey,
                         onPressed: () {
+                          _homeScreen = !_homeScreen;
                           signInWithGoogle().whenComplete(() {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) {
@@ -197,14 +231,14 @@ class AuthentificationState extends State<Authentification> {
                   actions: [
                     FlatButton(
                       child: Text('Yes'),
-                      onPressed: () => exit(0),
+                      onPressed: () => Navigator.pop(c, true),
                     ),
                     FlatButton(
                       child: Text('No'),
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => Navigator.pop(c, false),
                     )
                   ]),
-            ));
+            ),);
   }
 
   void secondscreenfunkcija(BuildContext context) {
@@ -220,8 +254,8 @@ class AuthentificationState extends State<Authentification> {
   }
 }
 
-bool validateUser(String username) {
-  if (username == '') {
+bool validatePhone(String phone) {
+  if (phone == '') {
     return false;
   }
   return true;
@@ -236,4 +270,12 @@ bool validatePass(String pass) {
 
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
 }
