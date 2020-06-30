@@ -4,6 +4,7 @@ import 'package:prviprojekat/Screens/Auth/authentification.dart';
 class Home extends StatelessWidget {
   final String user;
   final String pass;
+  
   Home({Key key, @required this.user, @required this.pass}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,9 @@ class Home extends StatelessWidget {
               maxLines: 15,
               autocorrect: false,
               decoration: InputDecoration(
-                hintText: '\n Hey ' +
+                hintText: '\nHey ' +
                     user +
-                    ', welcome to second screen. \n \n \n \n \n Your password is ' +
+                    ', welcome to second screen. \n \n \n \n \n Your phone number is ' +
                     pass,
                 filled: true,
                 fillColor: hexToColor('#bdef9a'),
