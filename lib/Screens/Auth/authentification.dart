@@ -48,8 +48,105 @@ class AuthentificationState extends State<Authentification> {
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                     ),
+
                   ),
                   SizedBox(height: 60.0),
+                  // TextField(
+                  //   controller: userControler,
+                  //   decoration: InputDecoration(
+                  //       prefixIcon: Icon(Icons.email),
+                  //       labelText: 'Enter email',
+                  //       errorText: _validateEmail
+                  //           ? null
+                  //           : 'Email field can\'t be empty',
+                  //       border: OutlineInputBorder(
+                  //           borderSide:
+                  //               BorderSide(color: Colors.grey, width: 2.0))),
+                  // ),
+                  Theme(
+                    child: TextField(
+                      controller: userControler,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          labelText: 'Enter email',
+                          errorText: _validateEmail
+                              ? null
+                              : 'Email field can\'t be empty',
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0))),
+                    ),
+                    data: Theme.of(context).copyWith(
+                      primaryColor: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 40.0),
+                  // TextField(
+                  //   controller: passwordControler,
+                  //   decoration: InputDecoration(
+                  //       prefixIcon: Icon(Icons.vpn_key),
+                  //       labelText: 'Enter password',
+                  //       errorText: _validatePass
+                  //           ? null
+                  //           : 'Password field can\'t be empty',
+                  //       border: OutlineInputBorder(
+                  //           borderSide:
+                  //               BorderSide(color: Colors.grey, width: 2.0))),
+                  //   obscureText: true,
+                  // ),
+                  Theme(
+                    child: TextField(
+                      autofocus: true,
+                      controller: passwordControler,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.vpn_key),
+                          labelText: 'Enter password',
+                          errorText: _validatePass
+                              ? null
+                              : (passwordControler.text.length == 0)
+                                  ? 'Password field can\'t be empty'
+                                  : 'Password field can\'t have less than 8 characters',
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0))),
+                      obscureText: true,
+                    ),
+                    data: Theme.of(context).copyWith(
+                      primaryColor: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 30.0),
+                  SizedBox(
+                    width: 160.0,
+                    child: RaisedButton(
+                      color: hexToColor('#3d422b'),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (!(validateUser(userControler.text) &&
+                              validatePass(passwordControler.text))) {
+                            validateUser(userControler.text)
+                                ? _validateEmail = true
+                                : _validateEmail = false;
+                            validatePass(passwordControler.text)
+                                ? _validatePass = true
+                                : _validatePass = false;
+                          } else {
+                            _validateEmail = true;
+                            _validatePass = true;
+                            secondscreenfunkcija(context);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+
+                  ),
+                  /*SizedBox(height: 60.0),
                   TextField(
                     controller: userControler,
                     decoration: InputDecoration(
@@ -101,7 +198,7 @@ class AuthentificationState extends State<Authentification> {
                         });
                       },
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: 20.0),
                   OutlineButton(
                     splashColor: Colors.grey,
@@ -124,7 +221,12 @@ class AuthentificationState extends State<Authentification> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          // Image(image: AssetImage("assets/google_logo.png"), height: 35.0,),
+
+                          Image(
+                            image: AssetImage("assets/google_logo.png"),
+                            height: 35.0,
+                          ),
+
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Text('Sign in with Google',
@@ -149,6 +251,8 @@ class AuthentificationState extends State<Authentification> {
   void secondscreenfunkcija(BuildContext context) {
     String username = userControler.text;
     String password = passwordControler.text;
+    userControler.clear();
+    passwordControler.clear();
     Navigator.push(
         context,
         MaterialPageRoute(
