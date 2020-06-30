@@ -5,14 +5,18 @@ import 'package:prviprojekat/Screens/Home/home.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:international_phone_input/international_phone_input.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Authentification extends StatefulWidget {
   @override
   AuthentificationState createState() => AuthentificationState();
 }
 
+
+
 class AuthentificationState extends State<Authentification> {
+  final databaseReference = Firestore.instance;
+
   TextEditingController userControler = TextEditingController();
   TextEditingController passwordControler = TextEditingController();
   TextEditingController phoneControler = TextEditingController();
@@ -20,6 +24,20 @@ class AuthentificationState extends State<Authentification> {
   bool _validatePass = true;
   bool _validatePhone=true;
   bool _homeScreen = true;
+
+  void createRecord() async {
+ /* await databaseReference.collection("users").document("1").setData({
+    'title': 'Mastering Flutter',
+    'description': 'Programming Guide for Dart'
+  });
+*/
+  DocumentReference ref = await databaseReference.collection("users").add({
+    'Email': userControler.text,
+    'Password': passwordControler.text,
+    'Phone number': phoneControler.text
+  });
+  print(ref.documentID);
+}
 
 
   @override
@@ -155,6 +173,7 @@ class AuthentificationState extends State<Authentification> {
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () {
+                           
                             setState(() {
                               if (!(validatePhone(phoneControler.text) &&
                                   validatePass(passwordControler.text) && userControler.text.isValidEmail())) {
@@ -171,7 +190,7 @@ class AuthentificationState extends State<Authentification> {
                                 _validateEmail = true;
                                 _validatePass = true;
                                 _validatePhone=true;
-                                if(userControler.text.isValidEmail()){secondscreenfunkcija(context);}
+                                if(userControler.text.isValidEmail()){ createRecord(); secondscreenfunkcija(context);}
                               }
                             });
                           },
@@ -279,3 +298,4 @@ extension EmailValidator on String {
         .hasMatch(this);
   }
 }
+
