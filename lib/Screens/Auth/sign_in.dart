@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:prviprojekat/Screens/Home/home.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:prviprojekat/Screens/Auth/authentification.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();

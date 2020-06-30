@@ -1,9 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:prviprojekat/Screens/Auth/sign_in.dart';
 import 'package:prviprojekat/Screens/Home/googleScreen.dart';
 import 'package:prviprojekat/Screens/Home/home.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Authentification extends StatefulWidget {
   @override
@@ -197,11 +197,11 @@ class AuthentificationState extends State<Authentification> {
                   actions: [
                     FlatButton(
                       child: Text('Yes'),
-                      onPressed: () => Navigator.pop(c, true),
+                      onPressed: () => exit(0),
                     ),
                     FlatButton(
                       child: Text('No'),
-                      onPressed: () => Navigator.pop(c, false),
+                      onPressed: () => Navigator.of(context).pop(),
                     )
                   ]),
             ));
