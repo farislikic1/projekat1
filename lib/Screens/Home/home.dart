@@ -4,7 +4,6 @@ import 'package:prviprojekat/Screens/Auth/authentification.dart';
 class Home extends StatelessWidget {
   final String user;
   final String pass;
-  
   Home({Key key, @required this.user, @required this.pass}) : super(key: key);
   @override
   Widget build(BuildContext context) {
